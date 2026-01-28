@@ -1,0 +1,90 @@
+<!-- Hero Section -->
+<section class="services-hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-label">Nuestros Servicios</span>
+      <h1 class="hero-title">Soluciones integrales para<br>la gestión de riesgos</h1>
+      <p class="hero-description">
+        Ofrecemos servicios especializados que combinan expertise técnico,<br>
+        metodologías probadas y tecnología de punta
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Services Grid -->
+<section class="services-section">
+  <div class="container">
+    <div class="services-grid">
+      <article 
+        *ngFor="let service of services; let i = index" 
+        class="service-card"
+        [id]="service.id"
+        [style.animation-delay.ms]="i * 100">
+        
+        <div class="service-icon-wrapper" [style.background]="'linear-gradient(135deg, ' + service.color + '15 0%, ' + service.color + '08 100%)'">
+          <!-- Education Icon -->
+          <svg *ngIf="service.icon === 'education'" class="service-icon" [style.color]="service.color" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+
+          <!-- Consulting Icon - Users/Collaboration -->
+          <svg *ngIf="service.icon === 'consulting'" class="service-icon" [style.color]="service.color" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+
+          <!-- Development Icon -->
+          <svg *ngIf="service.icon === 'development'" class="service-icon" [style.color]="service.color" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+
+        <h2 class="service-title">{{ service.title }}</h2>
+        <p class="service-description">{{ service.description }}</p>
+
+        <ul class="service-features">
+          <li *ngFor="let feature of service.features">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            {{ feature }}
+          </li>
+        </ul>
+
+        <div class="service-cta">
+          <a routerLink="/contacto" class="btn-secondary">
+            <span>Solicitar información</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">¿Listo para transformar tu gestión de riesgos?</h2>
+      <p class="cta-description">
+        Contáctanos hoy y descubre cómo nuestras soluciones pueden ayudarte
+      </p>
+      <a routerLink="/contacto" class="btn-primary">
+        <span>Comenzar ahora</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

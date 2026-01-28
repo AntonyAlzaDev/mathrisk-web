@@ -1,0 +1,535 @@
+.courses-management {
+  padding: var(--spacing-lg);
+}
+
+.management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+
+  h1 {
+    margin: 0;
+    color: var(--text-dark);
+  }
+
+  button svg {
+    margin-right: 0.5rem;
+  }
+}
+
+// Form Container
+.course-form-container {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid #e0e0e0;
+
+  h2 {
+    margin: 0;
+    color: var(--text-dark);
+  }
+
+  .btn-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f5f5f5;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+}
+
+// Form Styles
+.course-form {
+  padding: var(--spacing-lg);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.form-section {
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid #f0f0f0;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.section-header-sm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+
+  label {
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.938rem;
+  }
+}
+
+.form-control {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  transition: border-color var(--transition-fast);
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-blue-dark);
+  }
+
+  &:disabled,
+  &[readonly] {
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+}
+
+textarea.form-control {
+  resize: vertical;
+  font-family: inherit;
+}
+
+select.form-control {
+  cursor: pointer;
+}
+
+.form-checkboxes {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-md);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  span {
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+}
+
+// Dynamic Lists
+.dynamic-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.list-item {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+
+  .form-control {
+    flex: 1;
+  }
+}
+
+.btn-remove {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: none;
+  background: #ffebee;
+  color: #c62828;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    background: #ef5350;
+    color: white;
+  }
+}
+
+// Modules
+.modules-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.module-card {
+  padding: var(--spacing-md);
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--border-radius-md);
+}
+
+.module-header-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+
+  h4 {
+    margin: 0;
+    color: var(--text-dark);
+  }
+}
+
+.topics-section {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid #e0e0e0;
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid #e0e0e0;
+  margin-top: var(--spacing-lg);
+}
+
+// Table Container
+.courses-table-container {
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.courses-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    background: #f5f5f5;
+
+    th {
+      padding: var(--spacing-md);
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-dark);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: background var(--transition-fast);
+
+      &:hover {
+        background: #fafafa;
+      }
+    }
+
+    td {
+      padding: var(--spacing-md);
+      vertical-align: middle;
+    }
+  }
+}
+
+.course-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+
+  .course-icon-sm {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-sm);
+    object-fit: contain;
+  }
+
+  strong {
+    display: block;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+  }
+
+  .course-category {
+    font-size: 0.813rem;
+    color: var(--text-gray);
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #e3f2fd;
+  color: #1976d2;
+  border-radius: var(--border-radius-full);
+  font-size: 0.813rem;
+  font-weight: 500;
+
+  &-level {
+    background: #f3e5f5;
+    color: #7b1fa2;
+  }
+}
+
+.price-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  .current-price {
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  .original-price {
+    font-size: 0.813rem;
+    color: var(--text-gray);
+    text-decoration: line-through;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius-full);
+  font-size: 0.813rem;
+  font-weight: 500;
+  margin-right: 0.25rem;
+
+  &.status-active {
+    background: #e8f5e9;
+    color: #388e3c;
+  }
+
+  &.status-inactive {
+    background: #ffebee;
+    color: #c62828;
+  }
+
+  &.status-programado {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+
+  &.status-en {
+    background: #e8f5e9;
+    color: #388e3c;
+  }
+
+  &.status-finalizado {
+    background: #f3e5f5;
+    color: #7b1fa2;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-action {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &.btn-edit {
+    background: #e3f2fd;
+    color: #1976d2;
+
+    &:hover {
+      background: #1976d2;
+      color: white;
+    }
+  }
+
+  &.btn-deactivate {
+    background: #fff3e0;
+    color: #f57c00;
+
+    &:hover {
+      background: #f57c00;
+      color: white;
+    }
+  }
+
+  &.btn-delete {
+    background: #ffebee;
+    color: #c62828;
+
+    &:hover {
+      background: #c62828;
+      color: white;
+    }
+  }
+}
+
+// Loading & Empty States
+.loading-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xxl);
+  gap: var(--spacing-md);
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(135, 206, 235, 0.2);
+    border-top-color: var(--primary-blue-dark);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  svg {
+    color: var(--text-gray);
+    opacity: 0.5;
+  }
+
+  h3 {
+    color: var(--text-dark);
+    margin: 0;
+  }
+
+  p {
+    color: var(--text-gray);
+    margin: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive
+@media (max-width: 1200px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .management-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .form-checkboxes {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+
+  .courses-table {
+    thead {
+      display: none;
+    }
+
+    tbody {
+      tr {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-md);
+        border: 1px solid #e0e0e0;
+        margin-bottom: var(--spacing-sm);
+        border-radius: var(--border-radius-sm);
+      }
+
+      td {
+        padding: 0.25rem 0;
+        border: none;
+
+        &::before {
+          content: attr(data-label);
+          font-weight: 600;
+          display: inline-block;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+}

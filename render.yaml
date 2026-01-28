@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: angular-app
+    env: static
+    staticPublishPath: dist/mathrisk-web
+    buildCommand: npm install && npm run build
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

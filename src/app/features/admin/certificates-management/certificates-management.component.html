@@ -1,0 +1,179 @@
+<div class="certificates-management">
+  <div class="page-header">
+    <h1>Gestión de Certificados</h1>
+    <p>Administra y genera certificados para los estudiantes</p>
+  </div>
+
+  <!-- Migration Section -->
+  <div class="migration-section">
+    <div class="migration-card">
+      <div class="migration-info">
+        <h3>Migración de Certificados Existentes</h3>
+        <p>Hay <strong>{{ existingCertificatesCount }}</strong> certificados del sistema anterior listos para migrar a Firestore.</p>
+      </div>
+      <button
+        class="btn-migrate"
+        (click)="migrateExistingCertificates()"
+        [disabled]="isMigrating()"
+      >
+        @if (isMigrating()) {
+          <span class="spinner"></span>
+          Migrando...
+        } @else {
+          Migrar Certificados
+        }
+      </button>
+    </div>
+    @if (migrationMessage()) {
+      <div class="migration-message" [class.success]="!migrationMessage().includes('Error')">
+        {{ migrationMessage() }}
+      </div>
+    }
+  </div>
+
+  <!-- Actions -->
+  <div class="actions-bar">
+    <button class="btn-primary" (click)="toggleForm()">
+      @if (showForm()) {
+        Cancelar
+      } @else {
+        + Nuevo Certificado
+      }
+    </button>
+    <button class="btn-secondary" (click)="loadCertificates()" [disabled]="isLoading()">
+      Actualizar Lista
+    </button>
+  </div>
+
+  <!-- New Certificate Form -->
+  @if (showForm()) {
+    <div class="form-card">
+      <h3>Nuevo Certificado</h3>
+      <form (ngSubmit)="saveCertificate()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="certificateNumber">Código del Certificado *</label>
+            <input
+              type="text"
+              id="certificateNumber"
+              [ngModel]="newCertificate().certificateNumber"
+              (ngModelChange)="updateFormField('certificateNumber', $event)"
+              name="certificateNumber"
+              placeholder="CERT-2025-019"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="completionDate">Fecha de Finalización *</label>
+            <input
+              type="text"
+              id="completionDate"
+              [ngModel]="newCertificate().completionDate"
+              (ngModelChange)="updateFormField('completionDate', $event)"
+              name="completionDate"
+              placeholder="DD/MM/YYYY"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="studentName">Nombre del Estudiante *</label>
+          <input
+            type="text"
+            id="studentName"
+            [ngModel]="newCertificate().studentName"
+            (ngModelChange)="updateFormField('studentName', $event)"
+            name="studentName"
+            placeholder="NOMBRE COMPLETO EN MAYÚSCULAS"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="courseName">Nombre del Curso *</label>
+          <input
+            type="text"
+            id="courseName"
+            [ngModel]="newCertificate().courseName"
+            (ngModelChange)="updateFormField('courseName', $event)"
+            name="courseName"
+            placeholder="Nombre del curso o capacitación"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="durationHours">Duración (horas)</label>
+            <input
+              type="number"
+              id="durationHours"
+              [ngModel]="newCertificate().durationHours"
+              (ngModelChange)="updateFormField('durationHours', $event)"
+              name="durationHours"
+              min="1"
+            />
+          </div>
+          <div class="form-group">
+            <label for="instructorName">Instructor / Emisor</label>
+            <input
+              type="text"
+              id="instructorName"
+              [ngModel]="newCertificate().instructorName"
+              (ngModelChange)="updateFormField('instructorName', $event)"
+              name="instructorName"
+            />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="toggleForm()">Cancelar</button>
+          <button type="submit" class="btn-save">Guardar Certificado</button>
+        </div>
+      </form>
+    </div>
+  }
+
+  <!-- Certificates List -->
+  <div class="certificates-list">
+    <h3>Certificados Registrados ({{ certificates().length }})</h3>
+
+    @if (isLoading()) {
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Cargando certificados...</p>
+      </div>
+    } @else if (certificates().length === 0) {
+      <div class="empty-state">
+        <p>No hay certificados registrados.</p>
+        <p>Usa el botón "Migrar Certificados" para importar los certificados existentes o crea uno nuevo.</p>
+      </div>
+    } @else {
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Estudiante</th>
+              <th>Curso</th>
+              <th>Fecha</th>
+              <th>Duración</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (cert of certificates(); track cert.id) {
+              <tr>
+                <td class="code">{{ cert.certificateNumber }}</td>
+                <td>{{ cert.studentName }}</td>
+                <td class="course">{{ cert.courseName }}</td>
+                <td>{{ cert.completionDate }}</td>
+                <td>{{ cert.durationHours }}h</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

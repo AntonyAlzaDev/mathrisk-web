@@ -1,0 +1,175 @@
+<div class="certificates-page">
+  <div class="container">
+    <!-- Loading State -->
+    @if (viewState() === 'loading') {
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Validando certificado...</p>
+      </div>
+    }
+
+    <!-- Search State -->
+    @if (viewState() === 'search') {
+      <div class="search-container">
+        <div class="search-card">
+          <div class="search-header">
+            <div class="logo-section">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" width="80" height="66">
+                <path d="M10 90 L35 40 L60 90 L85 40 L110 90"
+                  fill="none"
+                  stroke="#5B9BD5"
+                  stroke-width="8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                </path>
+                <circle cx="53" cy="34" r="4" fill="#E07B7B"></circle>
+                <circle cx="67" cy="34" r="4" fill="#E07B7B"></circle>
+                <circle cx="60" cy="25" r="4" fill="#E07B7B"></circle>
+              </svg>
+              <span class="logo-text">MathRisk</span>
+            </div>
+            <h1>Verificar Certificado</h1>
+            <p>Ingresa el código del certificado para validar su autenticidad</p>
+          </div>
+
+          <div class="search-form">
+            <div class="input-group">
+              <input
+                type="text"
+                [(ngModel)]="searchCode"
+                placeholder="Ej: CERT-2025-001"
+                (keyup.enter)="verifyCertificate()"
+                [disabled]="isSearching()"
+              />
+              <button
+                class="btn-search"
+                (click)="verifyCertificate()"
+                [disabled]="isSearching() || !searchCode()"
+              >
+                @if (isSearching()) {
+                  <span class="btn-spinner"></span>
+                } @else {
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                  Verificar
+                }
+              </button>
+            </div>
+          </div>
+
+          <div class="search-info">
+            <p>El código se encuentra en tu certificado, generalmente en formato <strong>CERT-YYYY-XXX</strong></p>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Valid Certificate State -->
+    @if (viewState() === 'valid' && certificate()) {
+      <div class="certificado-container">
+        <div class="certificado-card">
+          <div class="certificado-imagen">
+            <div class="imagen-fondo"></div>
+            <div class="logo-overlay">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100" width="100" height="83">
+                <path d="M10 90 L35 40 L60 90 L85 40 L110 90"
+                  fill="none"
+                  stroke="#5B9BD5"
+                  stroke-width="8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                </path>
+                <circle cx="53" cy="34" r="4" fill="#E07B7B"></circle>
+                <circle cx="67" cy="34" r="4" fill="#E07B7B"></circle>
+                <circle cx="60" cy="25" r="4" fill="#E07B7B"></circle>
+              </svg>
+              <div class="logo-text">MathRisk</div>
+            </div>
+          </div>
+
+          <div class="certificado-contenido">
+            <div class="header-validacion">
+              <h2 class="titulo-validacion">Certificado Válido</h2>
+              <div class="badge-valido">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="30" cy="30" r="28" fill="#00b294" stroke="#ffffff" stroke-width="4"/>
+                  <path d="M18 30L26 38L42 22" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="info-alumno">
+              <h1 class="nombre-alumno">{{ certificate()!.studentName }}</h1>
+            </div>
+
+            <div class="info-curso">
+              <div class="info-item">
+                <span class="info-label">Capacitación:</span>
+                <span class="info-value">{{ certificate()!.courseName }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Duración:</span>
+                <span class="info-value">{{ certificate()!.durationHours }} horas</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Emitido por:</span>
+                <span class="info-value">{{ certificate()!.instructorName }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Fecha de finalización:</span>
+                <span class="info-value">{{ certificate()!.completionDate }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Código de certificado:</span>
+                <span class="info-value codigo">{{ certificate()!.certificateNumber }}</span>
+              </div>
+            </div>
+
+            <div class="acciones">
+              <button (click)="printCertificate()" class="btn-descargar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="7 10 12 15 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Imprimir certificado
+              </button>
+              <button (click)="resetSearch()" class="btn-volver">Nueva búsqueda</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-adicional">
+          <p>Este certificado digital ha sido verificado y es válido. Para más información, visite <a routerLink="/">mathrisksolution.com</a></p>
+        </div>
+      </div>
+    }
+
+    <!-- Invalid Certificate State -->
+    @if (viewState() === 'invalid') {
+      <div class="error-container">
+        <div class="error-card">
+          <div class="error-icon">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="38" fill="#dc3545" stroke="#ffffff" stroke-width="4"/>
+              <path d="M50 30L30 50M30 30L50 50" stroke="white" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h2 class="error-titulo">Certificado No Válido</h2>
+          <p class="error-mensaje">
+            El código de certificado proporcionado no es válido o no existe en nuestros registros.
+          </p>
+          <p class="error-submensaje">
+            Si cree que esto es un error, por favor contacte con nosotros.
+          </p>
+          <div class="error-acciones">
+            <a routerLink="/contacto" class="btn-contacto">Contactar soporte</a>
+            <button (click)="resetSearch()" class="btn-volver">Intentar de nuevo</button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

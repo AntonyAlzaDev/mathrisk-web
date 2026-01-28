@@ -1,0 +1,390 @@
+// ============================================
+// Variables - Colores Corporativos MathRisk
+// ============================================
+$color-primary: #8DC6E6;
+$color-primary-dark: #6BA8CC;
+$color-secondary: #FF8C42;
+$color-dark: #3D3D3D;
+$color-text: #2C2C2C;
+$color-text-light: #6B6B6B;
+$color-white: #FFFFFF;
+$color-gray-light: #F8F8F8;
+
+// Transiciones
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+
+// Sombras
+$shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+$shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+
+// ============================================
+// Hero Section
+// ============================================
+.services-hero {
+  padding: 8rem 0 6rem;
+  background: linear-gradient(180deg, 
+    rgba($color-primary, 0.04) 0%, 
+    $color-white 100%
+  );
+  text-align: center;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 6rem 0 4rem;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    @media (max-width: $breakpoint-sm) {
+      padding: 0 1rem;
+    }
+  }
+
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $color-primary-dark;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: $color-dark;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: $color-text-light;
+    margin: 0;
+  }
+}
+
+// ============================================
+// Services Section
+// ============================================
+.services-section {
+  padding: 6rem 0;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 4rem 0;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+
+    @media (max-width: $breakpoint-sm) {
+      padding: 0 1rem;
+    }
+  }
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+
+  @media (max-width: $breakpoint-sm) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+// ============================================
+// Service Card
+// ============================================
+.service-card {
+  background: $color-white;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: $shadow-sm;
+  transition: all $transition-normal;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 2rem;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $color-primary-dark 0%, $color-primary 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform $transition-normal;
+  }
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $shadow-lg;
+
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .service-icon-wrapper {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// ============================================
+// Service Icon
+// ============================================
+.service-icon-wrapper {
+  width: 88px;
+  height: 88px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: transform $transition-normal;
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+// ============================================
+// Service Content
+// ============================================
+.service-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $color-dark;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.375rem;
+  }
+}
+
+.service-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: $color-text-light;
+  margin-bottom: 1.5rem;
+}
+
+.service-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    color: $color-text;
+    margin-bottom: 0.875rem;
+    line-height: 1.5;
+
+    svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: $color-primary-dark;
+    }
+  }
+}
+
+// ============================================
+// Service CTA
+// ============================================
+.service-cta {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba($color-dark, 0.08);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: $color-primary-dark;
+  background: transparent;
+  border: 2px solid $color-primary;
+  border-radius: 980px;
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  svg {
+    transition: transform $transition-fast;
+  }
+
+  &:hover {
+    background: $color-primary-dark;
+    border-color: $color-primary-dark;
+    color: $color-white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba($color-primary-dark, 0.25);
+
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// CTA Section
+// ============================================
+.cta-section {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, $color-primary-dark 0%, $color-primary 100%);
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 4rem 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba($color-white, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: $breakpoint-sm) {
+      padding: 0 1rem;
+    }
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: $color-white;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgba($color-white, 0.95);
+    margin-bottom: 2rem;
+  }
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: $color-primary-dark;
+  background: $color-white;
+  border: none;
+  border-radius: 980px;
+  text-decoration: none;
+  transition: all $transition-normal;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+
+  svg {
+    transition: transform $transition-fast;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+
+    svg {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+// ============================================
+// Animations
+// ============================================
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ============================================
+// Accesibilidad
+// ============================================
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid $color-primary-dark;
+  outline-offset: 4px;
+}

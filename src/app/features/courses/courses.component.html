@@ -1,0 +1,314 @@
+<div class="courses-page">
+  <!-- Hero Section -->
+  <section class="courses-hero">
+    <div class="container">
+      <h1 class="fade-in-up">Cursos y Capacitaciones</h1>
+      <p class="subtitle fade-in-up">Especializaciones con los expertos</p>
+    </div>
+  </section>
+
+  <!-- Search Bar -->
+  <section class="search-section">
+    <div class="container">
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Buscar cursos por nombre, descripción o etiquetas..."
+          (input)="onSearch($event)"
+          class="search-input">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content with Sidebar -->
+  <section class="courses-section">
+    <div class="container">
+      <div class="courses-layout">
+
+        <!-- Mobile Backdrop -->
+        <div class="filters-backdrop" [class.show]="showFilters()" (click)="toggleFilters()"></div>
+
+        <!-- Mobile Filter Toggle -->
+        <div class="mobile-filter-toggle">
+          <button class="filter-toggle-btn" (click)="toggleFilters()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+            <span>Filtros</span>
+            <span class="filter-badge" *ngIf="activeFiltersCount() > 0">{{ activeFiltersCount() }}</span>
+          </button>
+        </div>
+
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar" [class.show]="showFilters()">
+          <div class="sidebar-header">
+            <h3>Filtrar cursos</h3>
+            <button
+              class="close-filters"
+              (click)="toggleFilters()"
+              aria-label="Cerrar filtros">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Active Filters & Clear -->
+          <div class="filter-actions" *ngIf="activeFiltersCount() > 0">
+            <span class="active-count">{{ activeFiltersCount() }} filtro{{ activeFiltersCount() !== 1 ? 's' : '' }} activo{{ activeFiltersCount() !== 1 ? 's' : '' }}</span>
+            <button class="clear-all-btn" (click)="clearFilters()">
+              Limpiar todo
+            </button>
+          </div>
+
+          <!-- Nivel Filter -->
+          <div class="filter-group">
+            <h4 class="filter-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 3h7v7H3z"/>
+                <path d="M14 3h7v7h-7z"/>
+                <path d="M14 14h7v7h-7z"/>
+                <path d="M3 14h7v7H3z"/>
+              </svg>
+              Nivel
+            </h4>
+            <div class="filter-options">
+              <button
+                class="filter-option"
+                [class.active]="isLevelSelected('Básico')"
+                (click)="toggleLevelFilter('Básico')">
+                <span class="checkbox"></span>
+                Básico
+              </button>
+              <button
+                class="filter-option"
+                [class.active]="isLevelSelected('Intermedio')"
+                (click)="toggleLevelFilter('Intermedio')">
+                <span class="checkbox"></span>
+                Intermedio
+              </button>
+              <button
+                class="filter-option"
+                [class.active]="isLevelSelected('Avanzado')"
+                (click)="toggleLevelFilter('Avanzado')">
+                <span class="checkbox"></span>
+                Avanzado
+              </button>
+            </div>
+          </div>
+
+          <!-- Category Filter -->
+          <div class="filter-group" *ngIf="availableCategories().length > 0">
+            <h4 class="filter-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+              Categoría
+            </h4>
+            <div class="filter-options">
+              <button
+                *ngFor="let category of availableCategories()"
+                class="filter-option"
+                [class.active]="isCategorySelected(category)"
+                (click)="toggleCategoryFilter(category)">
+                <span class="checkbox"></span>
+                {{ category }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Tags Filter -->
+          <div class="filter-group" *ngIf="availableTags().length > 0">
+            <h4 class="filter-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                <line x1="7" y1="7" x2="7.01" y2="7"/>
+              </svg>
+              Etiquetas
+              <span class="filter-hint" *ngIf="selectedCategories().length > 0">
+                ({{ selectedCategories().join(', ') }})
+              </span>
+            </h4>
+            <div class="filter-options tags-options">
+              <button
+                *ngFor="let tag of availableTags()"
+                class="filter-option tag-option"
+                [class.active]="isTagSelected(tag)"
+                (click)="toggleTagFilter(tag)">
+                <span class="checkbox"></span>
+                #{{ tag }}
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="courses-content">
+          <!-- Results Header -->
+          <div class="results-header" *ngIf="!loading()">
+            <h2>{{ filteredCourses().length }} curso{{ filteredCourses().length !== 1 ? 's' : '' }} encontrado{{ filteredCourses().length !== 1 ? 's' : '' }}</h2>
+          </div>
+
+          <!-- Loading State -->
+          <div *ngIf="loading()" class="loading-container">
+            <div class="spinner"></div>
+            <p>Cargando cursos...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="!loading() && filteredCourses().length === 0" class="empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+            <h3>No se encontraron cursos</h3>
+            <p>Intenta ajustando los filtros o términos de búsqueda</p>
+          </div>
+
+          <!-- Courses Grid -->
+          <div class="courses-grid" *ngIf="!loading() && filteredCourses().length > 0">
+        <div
+          *ngFor="let course of filteredCourses()"
+          class="course-card animate-on-scroll"
+          [class.expanded]="isCardExpanded(course.id!)">
+
+          <!-- Course Header Image -->
+          <div class="course-header" [style.backgroundImage]="'url(' + course.featuredImage + ')'">
+            <div class="course-icon">
+              <img [src]="course.icon" [alt]="course.title">
+            </div>
+            <span class="course-status" [ngClass]="getStatusClass(course.status)">
+              {{ course.status }}
+            </span>
+          </div>
+
+          <!-- Course Body -->
+          <div class="course-body">
+            <h3 class="course-title">{{ course.title }}</h3>
+
+            <div class="course-meta">
+              <span class="course-level">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 3h7v7H3z"/>
+                  <path d="M14 3h7v7h-7z"/>
+                  <path d="M14 14h7v7h-7z"/>
+                  <path d="M3 14h7v7H3z"/>
+                </svg>
+                {{ course.level }}
+              </span>
+              <span class="course-duration">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                {{ course.duration }}h
+              </span>
+            </div>
+
+            <p class="course-description">{{ course.description }}</p>
+
+            <!-- Price -->
+            <div class="course-pricing">
+              <div class="price-info">
+                <span class="original-price" *ngIf="course.originalPrice > course.discountedPrice">
+                  S/ {{ course.originalPrice }}
+                </span>
+                <span class="current-price">S/ {{ course.discountedPrice }}</span>
+              </div>
+              <span class="discount-badge" *ngIf="course.discountPercentage > 0">
+                -{{ course.discountPercentage }}%
+                <small>DCTO</small>
+              </span>
+            </div>
+
+            <!-- Expanded Content -->
+            <div class="expanded-content" *ngIf="isCardExpanded(course.id!)">
+              <!-- Start Date -->
+              <div class="course-detail-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                <span><strong>Inicio:</strong> {{ formatDate(course.startDate) }}</span>
+              </div>
+
+              <!-- Instructor -->
+              <div class="course-instructor">
+                <img
+                  [src]="course.instructor.photo"
+                  [alt]="course.instructor.name"
+                  class="instructor-photo">
+                <div class="instructor-info">
+                  <p class="instructor-name">{{ course.instructor.name }}</p>
+                  <p class="instructor-title">{{ course.instructor.title }}</p>
+                </div>
+              </div>
+
+              <!-- Launch Offer (if active) -->
+              <div class="launch-offer" *ngIf="course.launchOffer?.active">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+                <span>{{ course.launchOffer.message }}</span>
+              </div>
+
+              <!-- Tags -->
+              <div class="course-tags" *ngIf="course.tags && course.tags.length > 0">
+                <span class="tag" *ngFor="let tag of course.tags">#{{ tag }}</span>
+              </div>
+
+              <!-- What you will learn -->
+              <div class="what-you-learn" *ngIf="course.whatYouWillLearn && course.whatYouWillLearn.length > 0">
+                <h4>Lo que aprenderás:</h4>
+                <ul>
+                  <li *ngFor="let item of course.whatYouWillLearn.slice(0, 3)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="course-actions">
+              <button
+                class="btn btn-secondary btn-full btn-expand"
+                (click)="toggleCardExpansion(course.id!, $event)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline [attr.points]="isCardExpanded(course.id!) ? '18 15 12 9 6 15' : '6 9 12 15 18 9'"/>
+                </svg>
+                {{ isCardExpanded(course.id!) ? 'Ver menos' : 'Ver más' }}
+              </button>
+              <button
+                class="btn btn-primary btn-full"
+                [routerLink]="['/cursos', course.id]"
+                (click)="$event.stopPropagation()">
+                Ver detalles completos
+              </button>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container text-center">
+      <h2>¿Tienes alguna consulta sobre nuestros cursos?</h2>
+      <p>Contáctanos y te ayudaremos a elegir el curso ideal para ti</p>
+      <a routerLink="/contacto" class="btn btn-light btn-lg">Contactar</a>
+    </div>
+  </section>
+</div>
